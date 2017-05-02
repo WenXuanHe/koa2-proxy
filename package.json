@@ -1,0 +1,50 @@
+{
+  "name": "koa-ym",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "node bin/www",
+    "pm2": "pm2 start bin/www ",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.1",
+    "debug": "^2.6.3",
+    "gulp-babel": "^6.1.2",
+    "jade": "~1.11.0",
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.6.0",
+    "karma-chrome-launcher": "^2.0.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-webpack": "^2.0.3",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^3.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^2.0.1",
+    "koa-onerror": "^1.2.1",
+    "koa-router": "^7.0.1",
+    "koa-static": "^3.0.0",
+    "koa-swig": "^2.2.1",
+    "koa-views": "^5.2.1",
+    "merge-descriptors": "^1.0.1",
+    "mocha": "^3.2.0",
+    "path": "^0.12.7",
+    "phantomjs": "^2.1.7+deprecated",
+    "selenium-webdriver": "^3.3.0",
+    "supertest": "^3.0.0",
+    "webpack": "^2.4.1",
+    "webpack-cli": "^1.0.0",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "devDependencies": {
+    "axios": "^0.16.1",
+    "co": "^4.6.0",
+    "nodemon": "^1.8.1",
+    "swig": "^1.4.2"
+  }
+}

@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="costom">
+        <div class="img"></div>
+        {% for item in members -%}
+            <div data-id='{{item.id}}'>
+                <span>{{item.name}}</span>
+                <span class="count">{{item.number}}</span>
+                <button class='thumb'>点赞</button>
+            </div>
+        {%- endfor %}
+        
+    </div>
+    <script type="text/javascript" src="/javascripts/dist/Thumb.js"></script>
+{% endblock %}
