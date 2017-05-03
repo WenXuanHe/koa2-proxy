@@ -41,8 +41,8 @@ module.exports = function(config) {
     
     // list of files / patterns to load in the browser
     files: [
-        {pattern: 'src/Thumb.js', watched: false},
-        {pattern: 'test/Thumb.spec.js', watched: false},
+        {pattern: './public/javascripts/src/Thumb.js', watched: false},
+        {pattern: './public/test/Thumb.spec.js', watched: false},
     ],
 
     // list of files to exclude
@@ -51,8 +51,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-        'src/Thumb.js': ['webpack'] ,
-        'test/Thumb.spec.js': ['webpack']  
+        './public/javascripts/src/Thumb.js': ['webpack'] ,
+        './public/test/Thumb.spec.js': ['webpack']  
     },
     webpack: webpackConfig,
     webpackMiddleware: {

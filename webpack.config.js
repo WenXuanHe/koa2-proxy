@@ -4,7 +4,11 @@ var ROOT_PATH = path.resolve(__dirname);
 
 module.exports = {
 	//这里填写配置项
-	entry: './public/javascripts/src/Thumb.js',
+	// entry: './public/javascripts/src/Thumb.js',
+	entry:{
+		'index' : './public/javascripts/src/Thumb.js',
+		'test' : './'
+	},
 	output: {
 		path: path.resolve(ROOT_PATH, './public/javascripts/dist'),
 		filename: "Thumb.js"

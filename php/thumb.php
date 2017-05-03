@@ -54,14 +54,16 @@
             $number = $res['number'] + 1;
             $sql = "UPDATE ".$this->tbName." SET number=".$number." WHERE id =".$id;
             parent::Open_mysql($sql);
-
             $res['number'] = $number;
             return $res;
         }
 
         public function Add($id){
             $res = $this->QueryByID($id);
-            return $this->AddByOne($id, $res);
+            if($res != null){
+                $res = $this->AddByOne($id, $res);
+            }
+            return $res;
         }
 
         public function queryAllMember(){
