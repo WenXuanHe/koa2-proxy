@@ -14,6 +14,7 @@ const index = require('./routes/index');
 
 // error handler
 onerror(app);
+
 app.context.render = co.wrap(render({
     root: path.join(__dirname, '/views'),
     autoescape: true,
@@ -38,6 +39,12 @@ app.use(async(ctx, next) => {
     const ms = new Date() - start;
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`);
 });
+
+//自己处理error
+// app.context.onerror = function(err) {
+//     console.log("user deal err" + err);  
+//     this.res.end(err && err.message || '');
+// }
 
 // routes
 app.use(index.routes(), index.allowedMethods());
