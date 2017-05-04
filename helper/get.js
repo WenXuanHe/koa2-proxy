@@ -11,7 +11,6 @@ module.exports = function ({ url, data }) {
             }
             body = JSON.parse(body);
             resolve(body);
-            console.log(response.statusCode);
         })
 
     });

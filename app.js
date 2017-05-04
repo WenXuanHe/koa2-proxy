@@ -42,7 +42,7 @@ app.use(async(ctx, next) => {
 
 //自己处理error
 // app.context.onerror = function(err) {
-//     console.log("user deal err" + err);  
+//     console.log("user deal err" + err);
 //     this.res.end(err && err.message || '');
 // }
 

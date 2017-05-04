@@ -53,6 +53,7 @@
         public function AddByOne($id, $res){
             $number = $res['number'] + 1;
             $sql = "UPDATE ".$this->tbName." SET number=".$number." WHERE id =".$id;
+            //$sql = "UPDATE ".$this->tbName." SET number=number+1 WHERE id =".$id;
             parent::Open_mysql($sql);
             $res['number'] = $number;
             return $res;
