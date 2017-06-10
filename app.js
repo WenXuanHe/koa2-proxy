@@ -10,7 +10,7 @@ const logger = require('koa-logger');
 const render = require('koa-swig');
 const co = require('co');
 
-const index = require('./routes/index');
+const index = require('./routes/dist/index');
 
 // error handler
 onerror(app);
