@@ -1,21 +1,28 @@
+var path = require("path");
 var webpack = require('webpack');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require("html-webpack-plugin");
-var path = require("path");
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var htmlWebpackPlugin = new HtmlWebpackPlugin({
+    hash:false,//path.resolve(__dirname, 'views/template/index.html')
+    filename: path.resolve(__dirname, 'views/index.html'),//最终生成的html文件
+    template: path.resolve(__dirname, 'views/template/index.html'),
+    chunks:['common', 'index'], //入口文件所依赖的js文件
+    inject:'define' //js文件插入到body最后一行
+});
+
+htmlWebpackPlugin = require('./views/template/injectAssetsIntoHtml')(htmlWebpackPlugin);
 
 module.exports = {
     entry: {
         index:path.resolve(__dirname, "public/javascripts/src/Thumb.js"),
-        vendors:[
-            "axios"
-        ]
     },
     output: {
         path: path.resolve(__dirname, 'public/javascripts/dist/'),
         filename: "[name].js",
         sourceMapFilename: '[file].map',
-        publicPath:'/javascripts/dist/'
+        publicPath:'javascripts/dist/'
     },
     module: {
         loaders: [
@@ -55,13 +62,7 @@ module.exports = {
     },
     plugins:[
         new ExtractTextPlugin("styles/[name].css"),
-        new HtmlWebpackPlugin({
-            hash:false,
-            filename: path.resolve(__dirname, 'views/index.html'),//最终生成的html文件
-            template: path.resolve(__dirname, 'views/template/index.html'),
-            chunks:['vendors', 'index'], //入口文件所依赖的js文件
-            inject:'body' //js文件插入到body最后一行
-        }),
+        htmlWebpackPlugin,
         new CleanWebpackPlugin(
             [
             'public/javascripts/dist/*.js',
@@ -73,7 +74,13 @@ module.exports = {
                 verbose:  true,        　　　　　　　　　　//开启在控制台输出信息
                 dry:      false        　　　　　　　　　　//启用删除文件
             }
-        )
+        ),
+        // 通用代码独立文件插件
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'common',
+            filename: 'common.js',
+            minChunks: 2
+        })
     ],
     devtool: 'source-map'
 }

@@ -1,7 +1,7 @@
 var router = require('koa-router')();
 var request = require('request');
-var post_proxy = require('./../helper/post');
-var get_proxy = require('./../helper/get');
+var post_proxy = require('../../helper/post');
+var get_proxy = require('../../helper/get');
 
 router.get('/index/index', async function(ctx, next) {
     //刷新页面

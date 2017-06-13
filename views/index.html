@@ -1,11 +1,11 @@
-{% extends '../layout/layout.html' %}
+{% extends './layout.html' %}
 
 {% block title %} {{title}} {% endblock %}
 
 {% block head %}
-<head>
 
-<link href="/javascripts/dist/styles/index.24d62a95.css" rel="stylesheet"></head>
+<link href="javascripts/dist/styles/index.css" rel="stylesheet">
+
 {% endblock %}
 
 {% block content %}
@@ -21,6 +21,7 @@
         {%- endfor %}
 
     </div>
-    <!-- <script type="text/javascript" src="/javascripts/dist/index.js"></script> -->
+
+    <script type="text/javascript" src="javascripts/dist/common.js"></script><script type="text/javascript" src="javascripts/dist/index.js"></script>
+
 {% endblock %}
-<script type="text/javascript" src="/javascripts/dist/vendors.24d62a95.js"></script><script type="text/javascript" src="/javascripts/dist/index.24d62a95.js"></script>

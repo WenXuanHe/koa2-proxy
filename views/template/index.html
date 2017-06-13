@@ -1,11 +1,11 @@
-{% extends '../layout/layout.html' %}
+{% extends './layout.html' %}
 
 {% block title %} {{title}} {% endblock %}
 
 {% block head %}
-<head>
 
-</head>
+{%style%}
+
 {% endblock %}
 
 {% block content %}
@@ -21,5 +21,7 @@
         {%- endfor %}
 
     </div>
-    <!-- <script type="text/javascript" src="/javascripts/dist/index.js"></script> -->
+
+    {%script%}
+
 {% endblock %}
