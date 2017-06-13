@@ -16,20 +16,20 @@ htmlWebpackPlugin = require('./views/template/injectAssetsIntoHtml')(htmlWebpack
 
 module.exports = {
     entry: {
-        index:path.resolve(__dirname, "public/javascripts/src/Thumb.js"),
+        index:path.resolve(__dirname, "public/src/javascripts/Thumb.js"),
     },
     output: {
-        path: path.resolve(__dirname, 'public/javascripts/dist/'),
+        path: path.resolve(__dirname, 'public/dist/'),
         filename: "[name].js",
         sourceMapFilename: '[file].map',
-        publicPath:'javascripts/dist/'
+        publicPath:'/dist/'
     },
     module: {
         loaders: [
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
-                include: [path.resolve(__dirname, 'public/javascripts/src')],
+                include: [path.resolve(__dirname, 'public/src/javascripts')],
                 exclude: /node_modules/,
                 query: {
                     "presets":
@@ -57,18 +57,14 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.scss'],
         alias: {
-          $css: path.resolve(__dirname, 'public/stylesheets'),
+          $css: path.resolve(__dirname, 'public/src/stylesheets'),
         }
     },
     plugins:[
         new ExtractTextPlugin("styles/[name].css"),
         htmlWebpackPlugin,
         new CleanWebpackPlugin(
-            [
-            'public/javascripts/dist/*.js',
-            'public/javascripts/dist/*.map',
-            'public/javascripts/dist/styles/*.css',
-            'public/javascripts/dist/styles/*.map'],　 //匹配删除的文件
+            [ 'public/dist/*.*'],　 //匹配删除的文件
             {
                 root: __dirname,       　　　　　　　　　　//根目录
                 verbose:  true,        　　　　　　　　　　//开启在控制台输出信息

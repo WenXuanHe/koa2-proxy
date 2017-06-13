@@ -13,6 +13,7 @@ router.get('/index/index', async function(ctx, next) {
 
     };
     var result = await get_proxy(proxyData);
+    console.log(result);
     return ctx.render('index', {
         title: 'koa2 page',
         members:result
