@@ -6,19 +6,35 @@ var post_proxy = require('../../helper/post');
 var get_proxy = require('../../helper/get');
 
 router.get('/index/index', async function (ctx, next) {
-    //刷新页面
-    var proxyData = {
-        url: 'http://localhost/thumb_php/thumb.php',
-        data: {
-            id: 1
-        }
 
-    };
-    var result = await get_proxy(proxyData);
-    return ctx.render('index', {
-        title: 'koa2 page',
-        members: result
-    });
+    if (ctx.request.header['x-pjax']) {
+        ctx.body = '\n            {% for item in members -%}\n                <x-praise data-id=\'{{item.id}}\' data-name=\'{{item.name}}\'\n                 data-number=\'{{item.number}}\'></x-praise>\n            {%- endfor %}';
+    } else {
+        //刷新页面
+        var proxyData = {
+            url: 'http://localhost/thumb_php/thumb.php',
+            data: {
+                id: 1
+            }
+        };
+        var result = await get_proxy(proxyData);
+        ctx.render('index', {
+            title: 'koa2 page',
+            members: result.result
+        });
+    }
+});
+
+router.get('/index/star', async function (ctx, next) {
+
+    if (ctx.request.header['x-pjax']) {
+        ctx.body = '<x-star></x-star>';
+    } else {
+        ctx.render('index', {
+            title: 'star',
+            members: []
+        });
+    }
 });
 
 //代理请求

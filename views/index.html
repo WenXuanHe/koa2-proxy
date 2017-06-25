@@ -1,27 +1,73 @@
-{% extends './layout.html' %}
+{% extends './template/layout.html' %}
 
 {% block title %} {{title}} {% endblock %}
 
 {% block head %}
 
-<link href="/dist/styles/index.css" rel="stylesheet">
+<link href="http://192.168.3.4:3000/dist/styles/index.css" rel="stylesheet">
 
 {% endblock %}
 
 {% block content %}
+
     <div class="costom">
         <div class="img"></div>
-        {% for item in members -%}
-            <div data-id='{{item.id}}'>
-                <span>{{item.name}}</span>
-                <span class="count">{{item.number}}</span>
-                <span is="x-praise" name="x-praise" data-id={{item.number}} ></span>
-                <!-- <button class='thumb' is="x-praise" name="x-praise">点赞</button> -->
-            </div>
-        {%- endfor %}
+        <div id="container" class="content">
+            {% for item in members -%}
 
+                <x-praise data-id='{{item.id}}' data-name='{{item.name}}'
+                 data-number='{{item.number}}'></x-praise>
+
+            {%- endfor %}
+        </div>
     </div>
+    <script>window.__scriptNames__="http://192.168.3.4:3000/dist/common.js,http://192.168.3.4:3000/dist/index.js"</script>
 
-    <script type="text/javascript" src="/dist/common.js"></script><script type="text/javascript" src="/dist/index.js"></script>
+    <script type="text/javascript">
+    (function(window){
+        /********** 将一些数据通过localforage存入indexDB， wenSQL ***********/
+            var initialData = '{{JSON.stringify(members)}}';
 
+            localforage.getItem('parise', function(err, value){
+                if(value == null){
+                    //不存在，存储
+                    localforage.setItem('parise', initialData);
+                }else{
+                    window._INITIAL_STATE_ = JSON.parse(value);
+                }
+            })
+        /**********将一些数据通过localforage存入indexDB， wenSQL ***********/
+
+        /************* lazyload并行加载，把js存入localstorage *****************/
+        if(window.__scriptNames__){
+            window.__scriptNames__ = __scriptNames__.split(',');
+            var flag = false;
+            top:
+            window.__scriptNames__.forEach(function(item, i){
+                if(localStorage.getItem(item)){
+                    //从localstorage拿出script，添加到body
+                    $("<scr"+"ipt>"+localStorage.getItem(item)+"</scr"+"ipt>").attr({type:"text/javascript",id:i}).appendTo($("head").remove("#"+i));
+                }else{
+                    localStorage.clear();
+                    flag = true;
+                    //第一次还是下载script，存到localstorage,
+                    //getScript加载并执行，
+                    // $.getScript(item, function(data){
+                    //     localStorage.setItem(item, data);
+                    // });
+                    // 用lazyload加载文件，不需要执行，只需要加载出来就好
+                    axios.get(item).then(function(data){
+                        localStorage.setItem(item, data.data);
+                    });
+                    return top;
+                }
+            });
+
+            if(flag){
+                LazyLoad.js(__scriptNames__,function(){});
+            }
+        }
+        /************* lazyload并行加载，把js存入localstorage *****************/
+    })(window);
+    </script>
 {% endblock %}

@@ -60,7 +60,7 @@
     "gulp-babel": "^6.1.2",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^2.6.0",
-    "html-webpack-plugin": "^2.28.0",
+    "html-webpack-plugin": "^2.29.0",
     "node-sass": "^4.5.3",
     "nodemon": "^1.8.1",
     "optimize-css-assets-webpack-plugin": "^2.0.0",
@@ -70,7 +70,7 @@
     "sass-loader": "^6.0.5",
     "style-loader": "^0.18.2",
     "swig": "^1.4.2",
+    "webpack-manifest": "^1.0.8",
     "x-tag": "^1.5.11"
-
   }
 }

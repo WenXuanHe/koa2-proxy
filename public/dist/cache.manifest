@@ -1,0 +1,9 @@
+CACHE MANIFEST
+# Time: Sun Jun 25 2017 16:39:30 GMT+0800 (中国标准时间)
+# koa testing
+
+CACHE:
+styles/index.css
+
+NETWORK:
+http://cdn.bootcdn.com/ *

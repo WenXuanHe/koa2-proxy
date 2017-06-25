@@ -1,0 +1,23 @@
+{% extends './template/layout.html' %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block head %}
+
+<link href="http://192.168.3.4:3000/dist/styles/index.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block content %}
+    <div class="nav">
+        <a href="/star">星星点赞</a>
+    </div>
+    <div class="costom">
+        <div class="img"></div>
+        <div id="container"  class="content">
+            <x-star></x-star>
+        </div>
+    </div>
+    <script>window.__scriptNames__="http://192.168.3.4:3000/dist/common.js,http://192.168.3.4:3000/dist/index.js"</script>
+
+{% endblock %}

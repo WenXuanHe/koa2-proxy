@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 export const addOne = function (proxy_url) {
     if (typeof axios.post === 'undefined') {
         alert('axios is not exit');

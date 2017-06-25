@@ -4,6 +4,7 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 var CleanWebpackPlugin = require('clean-webpack-plugin');
 var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+var Manifest= require('webpack-manifest');
 var htmlWebpackPlugin = new HtmlWebpackPlugin({
     hash:false,//path.resolve(__dirname, 'views/template/index.html')
     filename: path.resolve(__dirname, 'views/index.html'),//最终生成的html文件
@@ -11,8 +12,15 @@ var htmlWebpackPlugin = new HtmlWebpackPlugin({
     chunks:['common', 'index'], //入口文件所依赖的js文件
     inject:'define' //js文件插入到body最后一行
 });
-
+var htmlWebpackPluginStar = new HtmlWebpackPlugin({
+    hash:false,//path.resolve(__dirname, 'views/template/index.html')
+    filename: path.resolve(__dirname, 'views/star.html'),//最终生成的html文件
+    template: path.resolve(__dirname, 'views/template/star.html'),
+    chunks:['common', 'index'], //入口文件所依赖的js文件
+    inject:'define' //js文件插入到body最后一行
+});
 htmlWebpackPlugin = require('./views/template/injectAssetsIntoHtml')(htmlWebpackPlugin);
+htmlWebpackPluginStar = require('./views/template/injectAssetsIntoHtml')(htmlWebpackPluginStar);
 
 module.exports = {
     entry: {
@@ -22,7 +30,8 @@ module.exports = {
         path: path.resolve(__dirname, 'public/dist/'),
         filename: "[name].js",
         sourceMapFilename: '[file].map',
-        publicPath:'/dist/'
+        /******用本地cdn的方式访问静态文件******/
+        publicPath:'http://192.168.3.4:3000/dist/'
     },
     module: {
         loaders: [
@@ -63,14 +72,37 @@ module.exports = {
     plugins:[
         new ExtractTextPlugin("styles/[name].css"),
         htmlWebpackPlugin,
-        new CleanWebpackPlugin(
-            [ 'public/dist/*.*'],　 //匹配删除的文件
-            {
-                root: __dirname,       　　　　　　　　　　//根目录
-                verbose:  true,        　　　　　　　　　　//开启在控制台输出信息
-                dry:      false        　　　　　　　　　　//启用删除文件
-            }
-        ),
+        htmlWebpackPluginStar,
+
+        /********* 配置manifest离线缓存文件 ********/
+        new Manifest({
+            cache: [
+              'styles/index.css',
+            ],
+            //Add time in comments.
+            timestamp: true,
+            // 生成的文件名字，选填
+            // The generated file name, optional.
+            filename:'cache.manifest',
+            // 注意*星号前面用空格隔开
+            network: [
+              'http://cdn.bootcdn.com/ *',
+            ],
+            // 注意中间用空格隔开
+            // fallback: ['/ /404.html'],
+            // manifest 文件中添加注释
+            // Add notes to manifest file.
+            headcomment: "koa testing",
+            master: ['views/template/layout.html']
+        }),
+        // new CleanWebpackPlugin(
+        //     [ 'public/dist/*.*'],　 //匹配删除的文件
+        //     {
+        //         root: __dirname,       　　　　　　　　　　//根目录
+        //         verbose:  true,        　　　　　　　　　　//开启在控制台输出信息
+        //         dry:      false        　　　　　　　　　　//启用删除文件
+        //     }
+        // ),
         // 通用代码独立文件插件
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common',

@@ -1,44 +1,71 @@
-import xtag from 'x-tag';
 import { addOne } from '../addOne';
 import thrities from '../thrities';
 
 xtag.register('x-praise', {
-  extends: 'span',
-  content: '<button class="thumb">点赞</button>',
+
+  content: `<div>
+        <span data-name></span>
+        <span class="count" data-number></span>
+        <button class='thumb'>点赞</button>
+    </div>`,
+
   lifecycle:{
     created: function(){
-
         this.thrities = thrities(addOne('/proxy'));
     }
   },
-
   methods:{
 
     praiseClick(elem) {
 
         this.thrities(this['data-id']).then((res)=>{
-            this['data-id'] = ++this['data-id'];
+            this['data-number'] = ++this['data-number'];
             ////渲染页面
-            this.render(elem);
+            // this.render(elem);
         }).catch(function (err) {
             alert(err.message);
         });
-    },
-    render(elem){
-        elem.parentNode.previousSibling.previousElementSibling.innerText = this['data-id'];
     }
   },
 
   accessors:{
     'data-id':{
         attribute:{
-            value:0
+            id:0
         },
         get: function(){
-            return this.value;
+            return this.id;
         },
         set: function(value){
-            this.value = value;
+            this.id = value;
+        }
+    },
+
+    'data-number':{
+        attribute:{
+            number:0
+        },
+        get: function(){
+            return this.number;
+        },
+        set: function(value){
+
+            this.number = value;
+            $(this).find('[data-number]').text(value);
+        }
+    },
+
+    'data-name':{
+        attribute:{
+            name:''
+        },
+        get: function(){
+            return this.name;
+        },
+        set: function(value){
+
+            this.name = value;
+            $(this).find('[data-name]').text(value);
         }
     },
 
@@ -46,7 +73,9 @@ xtag.register('x-praise', {
 
   events:{
     click:function(e){
-        this.praiseClick(e.target);
+        if(e.target.className === 'thumb'){
+            this.praiseClick(e.target);
+        }
     }
   }
 });

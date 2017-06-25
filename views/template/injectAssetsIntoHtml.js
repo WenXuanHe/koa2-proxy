@@ -8,10 +8,13 @@ module.exports = function(htmlWebpackPlugin) {
         var head = assetTags.head.map(this.createHtmlTag);
         var bodyRegExp = /({%script%})/i;
         var headReqexp = /({%style%})/i;
-
+        var scripts = "", __scriptNames__=[];
         if (htmlWebpackPlugin.options.inject === "define") {
-
-            return html.replace(bodyRegExp, body.join('')).replace(headReqexp, head.join(''));
+            body.join('').replace(/src="([^"]+)"/g, function(a, b){
+                __scriptNames__.push(b);
+            });
+            scripts = `<script>window.__scriptNames__="${__scriptNames__}"</script>`;
+            return html.replace(bodyRegExp, scripts).replace(headReqexp, head.join(''));
 
         } else {
             return HtmlWebpackPlugin.prototype.injectAssetsIntoHtml(html, assets, assetTags);

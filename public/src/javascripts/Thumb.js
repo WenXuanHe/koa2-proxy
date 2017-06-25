@@ -2,6 +2,7 @@
 // import './common/jquery.min.js';
 import '$css/style.scss';
 import './components/x-praise';
+import './components/x-star';
 // export class Thumb extends PraiseButton{
 // 	constructor(){
 // 		super(...arguments);
